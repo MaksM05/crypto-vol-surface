@@ -1,0 +1,23 @@
+services:
+  timescaledb:
+    image: timescale/timescaledb:latest-pg16
+    container_name: volsurface-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: volsurface
+      POSTGRES_PASSWORD: volsurface_dev   # dev only — never use in prod
+      POSTGRES_DB: volsurface
+    ports:
+      - "5432:5432"
+    volumes:
+      - volsurface_pgdata:/var/lib/postgresql/data
+      # schema.sql runs automatically on first container creation
+      - ./storage/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U volsurface -d volsurface"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  volsurface_pgdata:
