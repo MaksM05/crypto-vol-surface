@@ -29,6 +29,7 @@ def _instrument(
     name: str = "BTC-26JUN26-77000-C",
     strike: float = 77000.0,
     option_type: str = "C",
+    last_seen: datetime | None = None,
 ) -> InstrumentRow:
     return InstrumentRow(
         instrument_name=name,
@@ -38,6 +39,7 @@ def _instrument(
         expiry=datetime(2026, 6, 26, 8, 0, tzinfo=UTC),
         contract_size=1.0,
         creation_ts=datetime(2026, 1, 1, tzinfo=UTC),
+        last_seen=last_seen or datetime(2026, 5, 22, 10, 0, tzinfo=UTC),
     )
 
 
@@ -63,10 +65,12 @@ async def test_upsert_instruments_roundtrip(pool: asyncpg.Pool, db_cleanup: None
     ]
 
 
-async def test_upsert_instruments_idempotent_updates_metadata(
+async def test_upsert_instruments_idempotent_updates_metadata_and_last_seen(
     pool: asyncpg.Pool, db_cleanup: None
 ) -> None:
-    first = _instrument()
+    t1 = datetime(2026, 5, 22, 10, 0, tzinfo=UTC)
+    t2 = datetime(2026, 5, 22, 10, 5, tzinfo=UTC)
+    first = _instrument(last_seen=t1)
     corrected = InstrumentRow(
         instrument_name=first.instrument_name,
         currency=first.currency,
@@ -75,13 +79,15 @@ async def test_upsert_instruments_idempotent_updates_metadata(
         expiry=first.expiry,
         contract_size=2.5,  # the correction
         creation_ts=first.creation_ts,
+        last_seen=t2,
     )
     async with pool.acquire() as conn:
         await upsert_instruments(conn, [first])
         await upsert_instruments(conn, [corrected])
-        rows = await conn.fetch("SELECT instrument_name, contract_size FROM instruments")
+        rows = await conn.fetch("SELECT instrument_name, contract_size, last_seen FROM instruments")
     assert len(rows) == 1
     assert rows[0]["contract_size"] == 2.5
+    assert rows[0]["last_seen"] == t2, "last_seen must refresh on DO UPDATE"
 
 
 async def test_upsert_instruments_empty_is_noop(pool: asyncpg.Pool, db_cleanup: None) -> None:

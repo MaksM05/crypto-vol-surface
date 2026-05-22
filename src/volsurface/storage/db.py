@@ -10,7 +10,8 @@ Conflict semantics
 ------------------
 
 - ``instruments``        — ``ON CONFLICT DO UPDATE``. Static-ish metadata; rare
-  corrections (contract size, creation timestamp) must land.
+  corrections (contract size, creation timestamp) must land. ``last_seen`` is
+  refreshed on every upsert so the poller's most recent cycle timestamp wins.
 - ``option_quotes``      — ``ON CONFLICT DO NOTHING``. Raw observation, source
   of truth; replays must never overwrite a captured tick.
 - ``forwards``           — ``ON CONFLICT DO NOTHING``. Same reasoning.
@@ -25,8 +26,14 @@ from datetime import datetime
 from typing import Any, Literal
 
 import asyncpg
+from asyncpg.pool import PoolConnectionProxy
 
 from volsurface.config import Settings
+
+# Either a raw Connection (used directly) or a proxy returned by ``pool.acquire()``.
+# Both implement the same execute/executemany/transaction surface used here.
+# PEP 695 ``type`` keeps the RHS lazy — asyncpg.Connection isn't subscriptable at runtime.
+type DbConn = asyncpg.Connection[asyncpg.Record] | PoolConnectionProxy[asyncpg.Record]
 
 # ---------------------------------------------------------------------------
 # Row types — mirror storage/schema.sql column-for-column.
@@ -35,7 +42,12 @@ from volsurface.config import Settings
 
 @dataclass(frozen=True, slots=True)
 class InstrumentRow:
-    """One row of the ``instruments`` table."""
+    """One row of the ``instruments`` table.
+
+    ``last_seen`` is the cycle timestamp of the most recent poll that observed
+    this instrument. It is refreshed on every upsert (insert AND DO UPDATE) so
+    a stalling ``last_seen`` flags a delisted / expired contract.
+    """
 
     instrument_name: str
     currency: str
@@ -44,6 +56,7 @@ class InstrumentRow:
     expiry: datetime
     contract_size: float | None
     creation_ts: datetime | None
+    last_seen: datetime
 
 
 @dataclass(frozen=True, slots=True)
@@ -126,15 +139,16 @@ async def close_pool() -> None:
 _INSTRUMENT_UPSERT = """
 INSERT INTO instruments (
     instrument_name, currency, strike, option_type,
-    expiry, contract_size, creation_ts
-) VALUES ($1, $2, $3, $4, $5, $6, $7)
+    expiry, contract_size, creation_ts, last_seen
+) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
 ON CONFLICT (instrument_name) DO UPDATE SET
     currency      = EXCLUDED.currency,
     strike        = EXCLUDED.strike,
     option_type   = EXCLUDED.option_type,
     expiry        = EXCLUDED.expiry,
     contract_size = EXCLUDED.contract_size,
-    creation_ts   = EXCLUDED.creation_ts
+    creation_ts   = EXCLUDED.creation_ts,
+    last_seen     = EXCLUDED.last_seen
 """
 
 _OPTION_QUOTE_INSERT = """
@@ -159,7 +173,7 @@ ON CONFLICT (instrument_name, time) DO NOTHING
 
 
 async def upsert_instruments(
-    conn: asyncpg.Connection[asyncpg.Record],
+    conn: DbConn,
     rows: Iterable[InstrumentRow],
 ) -> int:
     """Upsert rows into ``instruments``.
@@ -176,7 +190,7 @@ async def upsert_instruments(
 
 
 async def insert_option_quotes(
-    conn: asyncpg.Connection[asyncpg.Record],
+    conn: DbConn,
     rows: Iterable[OptionQuoteRow],
 ) -> int:
     """Insert rows into ``option_quotes``.
@@ -193,7 +207,7 @@ async def insert_option_quotes(
 
 
 async def insert_forwards(
-    conn: asyncpg.Connection[asyncpg.Record],
+    conn: DbConn,
     rows: Iterable[ForwardRow],
 ) -> int:
     """Insert rows into ``forwards``.
@@ -210,7 +224,7 @@ async def insert_forwards(
 
 
 async def insert_funding_rates(
-    conn: asyncpg.Connection[asyncpg.Record],
+    conn: DbConn,
     rows: Iterable[FundingRateRow],
 ) -> int:
     """Insert rows into ``funding_rates``.

@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS instruments (
     option_type       CHAR(1) NOT NULL,           -- 'C' / 'P'
     expiry            TIMESTAMPTZ NOT NULL,
     contract_size     DOUBLE PRECISION,
-    creation_ts       TIMESTAMPTZ
+    creation_ts       TIMESTAMPTZ,
+    last_seen         TIMESTAMPTZ NOT NULL        -- cycle ts of the most recent poll that saw this
 );
 
 -- The vol data. Hypertable. One row per (instrument, snapshot).
@@ -77,3 +78,4 @@ SELECT create_hypertable('computed_iv', 'time', if_not_exists => TRUE);
 -- Helpful indexes for the queries you'll actually run
 CREATE INDEX IF NOT EXISTS idx_quotes_time ON option_quotes (time DESC);
 CREATE INDEX IF NOT EXISTS idx_instruments_expiry ON instruments (expiry);
+CREATE INDEX IF NOT EXISTS idx_instruments_last_seen ON instruments (last_seen);

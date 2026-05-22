@@ -30,6 +30,14 @@ class Settings(BaseSettings):
     db_pool_min: int = 1
     db_pool_max: int = 10
 
+    # Deribit ingestion
+    deribit_rest_url: str = "https://www.deribit.com/api/v2"
+    deribit_ws_url: str = "wss://www.deribit.com/ws/api/v2"
+    deribit_http_timeout_s: float = 10.0
+    poll_interval_s: int = 300
+    ws_backoff_initial_s: float = 1.0
+    ws_backoff_max_s: float = 60.0
+
     @property
     def database_url(self) -> str:
         """Return an asyncpg-compatible Postgres DSN."""
