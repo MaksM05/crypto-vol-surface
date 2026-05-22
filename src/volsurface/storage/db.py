@@ -93,6 +93,28 @@ class FundingRateRow:
     index_price: float | None
 
 
+@dataclass(frozen=True, slots=True)
+class OptionQuoteWithMeta:
+    """An ``option_quotes`` row joined to its ``instruments`` metadata.
+
+    Returned by :func:`fetch_option_quotes_at` for read-side consumers
+    (validation harness, analytics) that need strike/expiry/option_type
+    alongside the quote.
+    """
+
+    time: datetime
+    instrument_name: str
+    mark_price: float | None
+    best_bid: float | None
+    best_ask: float | None
+    open_interest: float | None
+    deribit_mark_iv: float | None
+    deribit_delta: float | None
+    strike: float
+    option_type: Literal["C", "P"]
+    expiry: datetime
+
+
 # ---------------------------------------------------------------------------
 # Pool management
 # ---------------------------------------------------------------------------
@@ -238,3 +260,75 @@ async def insert_funding_rates(
     async with conn.transaction():
         await conn.executemany(_FUNDING_RATE_INSERT, batch)
     return len(batch)
+
+
+# ---------------------------------------------------------------------------
+# Read helpers — used by the validation harness and future analytics.
+# ---------------------------------------------------------------------------
+
+
+async def get_forward(
+    conn: DbConn,
+    expiry: datetime,
+    at_or_before: datetime,
+) -> ForwardRow | None:
+    """Return the most recent ``forwards`` row for ``expiry`` at or before ``at_or_before``.
+
+    ``None`` if no forward has been recorded for that expiry up to the cutoff.
+    """
+    row = await conn.fetchrow(
+        """
+        SELECT time, expiry, forward_price, index_price
+        FROM forwards
+        WHERE expiry = $1 AND time <= $2
+        ORDER BY time DESC
+        LIMIT 1
+        """,
+        expiry,
+        at_or_before,
+    )
+    if row is None:
+        return None
+    return ForwardRow(
+        time=row["time"],
+        expiry=row["expiry"],
+        forward_price=row["forward_price"],
+        index_price=row["index_price"],
+    )
+
+
+async def fetch_option_quotes_at(
+    conn: DbConn,
+    snapshot_time: datetime,
+) -> list[OptionQuoteWithMeta]:
+    """Return every ``option_quotes`` row at ``snapshot_time`` joined to ``instruments``.
+
+    No filtering — callers decide what to drop (null prices, illiquid, etc.).
+    """
+    rows = await conn.fetch(
+        """
+        SELECT q.time, q.instrument_name, q.mark_price, q.best_bid, q.best_ask,
+               q.open_interest, q.deribit_mark_iv, q.deribit_delta,
+               i.strike, i.option_type, i.expiry
+        FROM option_quotes q
+        JOIN instruments i ON i.instrument_name = q.instrument_name
+        WHERE q.time = $1
+        """,
+        snapshot_time,
+    )
+    return [
+        OptionQuoteWithMeta(
+            time=r["time"],
+            instrument_name=r["instrument_name"],
+            mark_price=r["mark_price"],
+            best_bid=r["best_bid"],
+            best_ask=r["best_ask"],
+            open_interest=r["open_interest"],
+            deribit_mark_iv=r["deribit_mark_iv"],
+            deribit_delta=r["deribit_delta"],
+            strike=r["strike"],
+            option_type=r["option_type"],
+            expiry=r["expiry"],
+        )
+        for r in rows
+    ]

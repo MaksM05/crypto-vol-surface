@@ -6,7 +6,10 @@ requires-python = ">=3.12"
 dependencies = [
     "asyncpg>=0.29",
     "httpx>=0.27",
+    "matplotlib>=3.8",
+    "numpy>=1.26",
     "pydantic-settings>=2.1",
+    "scipy>=1.13",
     "websockets>=13",
 ]
 
@@ -29,7 +32,7 @@ packages = ["src/volsurface"]
 [tool.ruff]
 line-length = 100
 target-version = "py312"
-src = ["src", "tests"]
+src = ["src", "tests", "scripts"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "N"]
@@ -43,6 +46,10 @@ plugins = ["pydantic.mypy"]
 [[tool.mypy.overrides]]
 module = "tests.*"
 ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = ["scipy.*", "matplotlib.*"]
+ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
