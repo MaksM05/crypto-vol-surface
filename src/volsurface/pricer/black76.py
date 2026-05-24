@@ -202,13 +202,14 @@ def standard_delta(
     .. warning::
 
         This is NOT the correct delta for Deribit's coin-settled (inverse)
-        BTC/ETH options. The inverse-contract delta needs an explicit USD
-        adjustment that will land in ``pricer/inverse.py`` in a later slice.
-        Do not persist this value to ``computed_iv.my_delta`` until that
-        adjustment exists, and never read this as the USD-risk delta for a
-        Deribit option. The name ``standard_delta`` (rather than ``delta``)
-        is deliberate — there is no top-level ``delta`` in this module so
-        nothing can import the wrong number by accident.
+        BTC/ETH options. The Deribit-convention (inverse) delta is
+        :func:`volsurface.pricer.inverse.inverse_delta`, which subtracts the
+        ``C / S`` correction this function does not apply. Do not persist
+        this value to ``computed_iv.my_delta`` and never read it as the
+        hedge delta for a Deribit option. The name ``standard_delta``
+        (rather than ``delta``) is deliberate — there is no top-level
+        ``delta`` in this module so nothing can import the wrong number by
+        accident.
 
     Returns
     -------

@@ -11,13 +11,17 @@ premium happens upstream in `validation/`.
 | `black76.py`   | Forward-based Black-76 price + analytic vega, gamma, theta, standard delta | yes   |
 | `iv_solver.py` | Newton-Raphson with Brent fallback. Returns `nan` on no-arb violation.     | yes   |
 | `forward.py`   | `ForwardSnapshot` dataclass + Act/365 time-to-expiry helper.               | yes   |
+| `inverse.py`   | Deribit-convention inverse delta: `δ_bs − C/S`. The correct hedge delta.   | yes   |
 
-## What is NOT here yet
+## Known limitation
 
-- **Inverse-contract delta adjustment** — see `black76.standard_delta`'s
-  docstring. The textbook delta exported as `standard_delta` is not the
-  USD delta of a Deribit coin-settled option; that adjustment is a planned
-  separate slice and will live in `pricer/inverse.py`.
+`inverse.py` is validated against first-principles limits (OTM convergence,
+deep-ITM call saturation at 0, deep-ITM put `|δ| > 1`) and the closed-form
+formula itself — **not yet against Deribit's published `ticker.delta`**.
+Our ingester leaves `option_quotes.deribit_delta` `NULL` (per the REST-
+poller Q3 decision), so there is no stored ground truth to compare against.
+A later slice will fetch ticker greeks for a small fixture and close that
+loop.
 
 ## Conventions
 
