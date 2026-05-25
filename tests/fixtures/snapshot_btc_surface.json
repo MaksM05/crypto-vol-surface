@@ -1,0 +1,755 @@
+{
+  "expiries": [
+    "2026-06-26T08:00:00+00:00",
+    "2026-07-31T08:00:00+00:00",
+    "2026-09-25T08:00:00+00:00",
+    "2026-12-25T08:00:00+00:00"
+  ],
+  "forwards": [
+    {
+      "expiry": "2026-06-26T08:00:00+00:00",
+      "forward_price": 77695.13,
+      "index_price": 77564.88
+    },
+    {
+      "expiry": "2026-07-31T08:00:00+00:00",
+      "forward_price": 77840.6,
+      "index_price": 77564.88
+    },
+    {
+      "expiry": "2026-09-25T08:00:00+00:00",
+      "forward_price": 78149.91,
+      "index_price": 77564.88
+    },
+    {
+      "expiry": "2026-12-25T08:00:00+00:00",
+      "forward_price": 78894.62,
+      "index_price": 77564.88
+    }
+  ],
+  "instruments": [
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-02-17T13:16:17+00:00",
+      "currency": "BTC",
+      "expiry": "2026-06-26T08:00:00+00:00",
+      "instrument_name": "BTC-26JUN26-64000-P",
+      "option_type": "P",
+      "strike": 64000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-02-17T13:16:17+00:00",
+      "currency": "BTC",
+      "expiry": "2026-06-26T08:00:00+00:00",
+      "instrument_name": "BTC-26JUN26-72000-P",
+      "option_type": "P",
+      "strike": 72000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-02-17T13:16:17+00:00",
+      "currency": "BTC",
+      "expiry": "2026-06-26T08:00:00+00:00",
+      "instrument_name": "BTC-26JUN26-74000-P",
+      "option_type": "P",
+      "strike": 74000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2025-11-18T04:13:02+00:00",
+      "currency": "BTC",
+      "expiry": "2026-06-26T08:00:00+00:00",
+      "instrument_name": "BTC-26JUN26-75000-P",
+      "option_type": "P",
+      "strike": 75000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-02-17T13:16:17+00:00",
+      "currency": "BTC",
+      "expiry": "2026-06-26T08:00:00+00:00",
+      "instrument_name": "BTC-26JUN26-78000-C",
+      "option_type": "C",
+      "strike": 78000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2025-06-26T08:00:10+00:00",
+      "currency": "BTC",
+      "expiry": "2026-06-26T08:00:00+00:00",
+      "instrument_name": "BTC-26JUN26-80000-C",
+      "option_type": "C",
+      "strike": 80000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-02-17T13:16:17+00:00",
+      "currency": "BTC",
+      "expiry": "2026-06-26T08:00:00+00:00",
+      "instrument_name": "BTC-26JUN26-82000-C",
+      "option_type": "C",
+      "strike": 82000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2025-07-01T18:42:00+00:00",
+      "currency": "BTC",
+      "expiry": "2026-06-26T08:00:00+00:00",
+      "instrument_name": "BTC-26JUN26-85000-C",
+      "option_type": "C",
+      "strike": 85000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-03-04T12:48:02+00:00",
+      "currency": "BTC",
+      "expiry": "2026-06-26T08:00:00+00:00",
+      "instrument_name": "BTC-26JUN26-86000-C",
+      "option_type": "C",
+      "strike": 86000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-03-04T18:16:01+00:00",
+      "currency": "BTC",
+      "expiry": "2026-06-26T08:00:00+00:00",
+      "instrument_name": "BTC-26JUN26-88000-C",
+      "option_type": "C",
+      "strike": 88000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-04-28T11:38:00+00:00",
+      "currency": "BTC",
+      "expiry": "2026-07-31T08:00:00+00:00",
+      "instrument_name": "BTC-31JUL26-56000-P",
+      "option_type": "P",
+      "strike": 56000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-04-23T08:00:24+00:00",
+      "currency": "BTC",
+      "expiry": "2026-07-31T08:00:00+00:00",
+      "instrument_name": "BTC-31JUL26-64000-P",
+      "option_type": "P",
+      "strike": 64000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-04-23T08:00:24+00:00",
+      "currency": "BTC",
+      "expiry": "2026-07-31T08:00:00+00:00",
+      "instrument_name": "BTC-31JUL26-68000-P",
+      "option_type": "P",
+      "strike": 68000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-04-23T08:00:24+00:00",
+      "currency": "BTC",
+      "expiry": "2026-07-31T08:00:00+00:00",
+      "instrument_name": "BTC-31JUL26-71000-P",
+      "option_type": "P",
+      "strike": 71000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-04-23T08:00:24+00:00",
+      "currency": "BTC",
+      "expiry": "2026-07-31T08:00:00+00:00",
+      "instrument_name": "BTC-31JUL26-74000-P",
+      "option_type": "P",
+      "strike": 74000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-04-23T08:00:24+00:00",
+      "currency": "BTC",
+      "expiry": "2026-07-31T08:00:00+00:00",
+      "instrument_name": "BTC-31JUL26-77000-P",
+      "option_type": "P",
+      "strike": 77000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-04-23T08:00:24+00:00",
+      "currency": "BTC",
+      "expiry": "2026-07-31T08:00:00+00:00",
+      "instrument_name": "BTC-31JUL26-80000-C",
+      "option_type": "C",
+      "strike": 80000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-04-23T08:00:24+00:00",
+      "currency": "BTC",
+      "expiry": "2026-07-31T08:00:00+00:00",
+      "instrument_name": "BTC-31JUL26-83000-C",
+      "option_type": "C",
+      "strike": 83000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-04-23T08:00:24+00:00",
+      "currency": "BTC",
+      "expiry": "2026-07-31T08:00:00+00:00",
+      "instrument_name": "BTC-31JUL26-86000-C",
+      "option_type": "C",
+      "strike": 86000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-04-23T08:00:24+00:00",
+      "currency": "BTC",
+      "expiry": "2026-07-31T08:00:00+00:00",
+      "instrument_name": "BTC-31JUL26-89000-C",
+      "option_type": "C",
+      "strike": 89000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2025-11-21T08:04:56+00:00",
+      "currency": "BTC",
+      "expiry": "2026-09-25T08:00:00+00:00",
+      "instrument_name": "BTC-25SEP26-50000-P",
+      "option_type": "P",
+      "strike": 50000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-02-23T05:04:00+00:00",
+      "currency": "BTC",
+      "expiry": "2026-09-25T08:00:00+00:00",
+      "instrument_name": "BTC-25SEP26-58000-P",
+      "option_type": "P",
+      "strike": 58000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-02-17T13:16:17+00:00",
+      "currency": "BTC",
+      "expiry": "2026-09-25T08:00:00+00:00",
+      "instrument_name": "BTC-25SEP26-64000-P",
+      "option_type": "P",
+      "strike": 64000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-02-17T13:16:17+00:00",
+      "currency": "BTC",
+      "expiry": "2026-09-25T08:00:00+00:00",
+      "instrument_name": "BTC-25SEP26-68000-P",
+      "option_type": "P",
+      "strike": 68000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-02-17T13:16:17+00:00",
+      "currency": "BTC",
+      "expiry": "2026-09-25T08:00:00+00:00",
+      "instrument_name": "BTC-25SEP26-74000-P",
+      "option_type": "P",
+      "strike": 74000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-02-17T13:16:17+00:00",
+      "currency": "BTC",
+      "expiry": "2026-09-25T08:00:00+00:00",
+      "instrument_name": "BTC-25SEP26-78000-P",
+      "option_type": "P",
+      "strike": 78000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-02-17T13:16:17+00:00",
+      "currency": "BTC",
+      "expiry": "2026-09-25T08:00:00+00:00",
+      "instrument_name": "BTC-25SEP26-84000-C",
+      "option_type": "C",
+      "strike": 84000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-02-17T13:16:17+00:00",
+      "currency": "BTC",
+      "expiry": "2026-09-25T08:00:00+00:00",
+      "instrument_name": "BTC-25SEP26-88000-C",
+      "option_type": "C",
+      "strike": 88000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-03-04T18:33:00+00:00",
+      "currency": "BTC",
+      "expiry": "2026-09-25T08:00:00+00:00",
+      "instrument_name": "BTC-25SEP26-94000-C",
+      "option_type": "C",
+      "strike": 94000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-04-17T17:55:00+00:00",
+      "currency": "BTC",
+      "expiry": "2026-09-25T08:00:00+00:00",
+      "instrument_name": "BTC-25SEP26-98000-C",
+      "option_type": "C",
+      "strike": 98000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2025-12-30T08:46:18+00:00",
+      "currency": "BTC",
+      "expiry": "2026-12-25T08:00:00+00:00",
+      "instrument_name": "BTC-25DEC26-40000-P",
+      "option_type": "P",
+      "strike": 40000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-02-23T05:11:00+00:00",
+      "currency": "BTC",
+      "expiry": "2026-12-25T08:00:00+00:00",
+      "instrument_name": "BTC-25DEC26-56000-P",
+      "option_type": "P",
+      "strike": 56000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-02-17T13:16:17+00:00",
+      "currency": "BTC",
+      "expiry": "2026-12-25T08:00:00+00:00",
+      "instrument_name": "BTC-25DEC26-64000-P",
+      "option_type": "P",
+      "strike": 64000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2025-12-25T08:00:15+00:00",
+      "currency": "BTC",
+      "expiry": "2026-12-25T08:00:00+00:00",
+      "instrument_name": "BTC-25DEC26-70000-P",
+      "option_type": "P",
+      "strike": 70000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-02-17T13:16:17+00:00",
+      "currency": "BTC",
+      "expiry": "2026-12-25T08:00:00+00:00",
+      "instrument_name": "BTC-25DEC26-76000-P",
+      "option_type": "P",
+      "strike": 76000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-02-17T13:16:17+00:00",
+      "currency": "BTC",
+      "expiry": "2026-12-25T08:00:00+00:00",
+      "instrument_name": "BTC-25DEC26-84000-C",
+      "option_type": "C",
+      "strike": 84000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-02-17T13:16:17+00:00",
+      "currency": "BTC",
+      "expiry": "2026-12-25T08:00:00+00:00",
+      "instrument_name": "BTC-25DEC26-88000-C",
+      "option_type": "C",
+      "strike": 88000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2025-12-25T08:00:15+00:00",
+      "currency": "BTC",
+      "expiry": "2026-12-25T08:00:00+00:00",
+      "instrument_name": "BTC-25DEC26-95000-C",
+      "option_type": "C",
+      "strike": 95000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-04-17T17:09:00+00:00",
+      "currency": "BTC",
+      "expiry": "2026-12-25T08:00:00+00:00",
+      "instrument_name": "BTC-25DEC26-102000-C",
+      "option_type": "C",
+      "strike": 102000.0
+    },
+    {
+      "contract_size": 1.0,
+      "creation_ts": "2026-05-06T12:35:00+00:00",
+      "currency": "BTC",
+      "expiry": "2026-12-25T08:00:00+00:00",
+      "instrument_name": "BTC-25DEC26-108000-C",
+      "option_type": "C",
+      "strike": 108000.0
+    }
+  ],
+  "option_quotes": [
+    {
+      "best_ask": 0.0038,
+      "best_bid": 0.0036,
+      "deribit_delta": null,
+      "deribit_mark_iv": 44.7,
+      "instrument_name": "BTC-26JUN26-64000-P",
+      "mark_price": 0.0037227,
+      "open_interest": 751.4
+    },
+    {
+      "best_ask": 0.015,
+      "best_bid": 0.014,
+      "deribit_delta": null,
+      "deribit_mark_iv": 36.42,
+      "instrument_name": "BTC-26JUN26-72000-P",
+      "mark_price": 0.01450444,
+      "open_interest": 2860.4
+    },
+    {
+      "best_ask": 0.021,
+      "best_bid": 0.02,
+      "deribit_delta": null,
+      "deribit_mark_iv": 34.85,
+      "instrument_name": "BTC-26JUN26-74000-P",
+      "mark_price": 0.02059912,
+      "open_interest": 1488.9
+    },
+    {
+      "best_ask": 0.025,
+      "best_bid": 0.024,
+      "deribit_delta": null,
+      "deribit_mark_iv": 34.27,
+      "instrument_name": "BTC-26JUN26-75000-P",
+      "mark_price": 0.02460863,
+      "open_interest": 2096.8
+    },
+    {
+      "best_ask": 0.037,
+      "best_bid": 0.036,
+      "deribit_delta": null,
+      "deribit_mark_iv": 32.63,
+      "instrument_name": "BTC-26JUN26-78000-C",
+      "mark_price": 0.03648143,
+      "open_interest": 2050.6
+    },
+    {
+      "best_ask": 0.0255,
+      "best_bid": 0.0245,
+      "deribit_delta": null,
+      "deribit_mark_iv": 32.0,
+      "instrument_name": "BTC-26JUN26-80000-C",
+      "mark_price": 0.02513926,
+      "open_interest": 3854.7
+    },
+    {
+      "best_ask": 0.017,
+      "best_bid": 0.0165,
+      "deribit_delta": null,
+      "deribit_mark_iv": 31.8,
+      "instrument_name": "BTC-26JUN26-82000-C",
+      "mark_price": 0.01687916,
+      "open_interest": 3163.1
+    },
+    {
+      "best_ask": 0.009,
+      "best_bid": 0.0085,
+      "deribit_delta": null,
+      "deribit_mark_iv": 31.99,
+      "instrument_name": "BTC-26JUN26-85000-C",
+      "mark_price": 0.00895994,
+      "open_interest": 4357.1
+    },
+    {
+      "best_ask": 0.0075,
+      "best_bid": 0.007,
+      "deribit_delta": null,
+      "deribit_mark_iv": 32.11,
+      "instrument_name": "BTC-26JUN26-86000-C",
+      "mark_price": 0.00719273,
+      "open_interest": 1063.9
+    },
+    {
+      "best_ask": 0.0047,
+      "best_bid": 0.0045,
+      "deribit_delta": null,
+      "deribit_mark_iv": 32.43,
+      "instrument_name": "BTC-26JUN26-88000-C",
+      "mark_price": 0.00459291,
+      "open_interest": 1941.5
+    },
+    {
+      "best_ask": 0.0048,
+      "best_bid": 0.0045,
+      "deribit_delta": null,
+      "deribit_mark_iv": 49.55,
+      "instrument_name": "BTC-31JUL26-56000-P",
+      "mark_price": 0.00461882,
+      "open_interest": 240.8
+    },
+    {
+      "best_ask": 0.012,
+      "best_bid": 0.0115,
+      "deribit_delta": null,
+      "deribit_mark_iv": 42.49,
+      "instrument_name": "BTC-31JUL26-64000-P",
+      "mark_price": 0.01176946,
+      "open_interest": 257.9
+    },
+    {
+      "best_ask": 0.0195,
+      "best_bid": 0.0185,
+      "deribit_delta": null,
+      "deribit_mark_iv": 39.6,
+      "instrument_name": "BTC-31JUL26-68000-P",
+      "mark_price": 0.01902237,
+      "open_interest": 261.3
+    },
+    {
+      "best_ask": 0.0275,
+      "best_bid": 0.027,
+      "deribit_delta": null,
+      "deribit_mark_iv": 37.71,
+      "instrument_name": "BTC-31JUL26-71000-P",
+      "mark_price": 0.02717487,
+      "open_interest": 98.0
+    },
+    {
+      "best_ask": 0.039,
+      "best_bid": 0.0385,
+      "deribit_delta": null,
+      "deribit_mark_iv": 36.22,
+      "instrument_name": "BTC-31JUL26-74000-P",
+      "mark_price": 0.03868331,
+      "open_interest": 124.9
+    },
+    {
+      "best_ask": 0.0545,
+      "best_bid": 0.0535,
+      "deribit_delta": null,
+      "deribit_mark_iv": 35.05,
+      "instrument_name": "BTC-31JUL26-77000-P",
+      "mark_price": 0.05414216,
+      "open_interest": 120.8
+    },
+    {
+      "best_ask": 0.0465,
+      "best_bid": 0.0455,
+      "deribit_delta": null,
+      "deribit_mark_iv": 34.22,
+      "instrument_name": "BTC-31JUL26-80000-C",
+      "mark_price": 0.04626156,
+      "open_interest": 1080.2
+    },
+    {
+      "best_ask": 0.032,
+      "best_bid": 0.0315,
+      "deribit_delta": null,
+      "deribit_mark_iv": 33.69,
+      "instrument_name": "BTC-31JUL26-83000-C",
+      "mark_price": 0.03194093,
+      "open_interest": 387.3
+    },
+    {
+      "best_ask": 0.022,
+      "best_bid": 0.021,
+      "deribit_delta": null,
+      "deribit_mark_iv": 33.41,
+      "instrument_name": "BTC-31JUL26-86000-C",
+      "mark_price": 0.02148737,
+      "open_interest": 79.8
+    },
+    {
+      "best_ask": 0.0145,
+      "best_bid": 0.014,
+      "deribit_delta": null,
+      "deribit_mark_iv": 33.53,
+      "instrument_name": "BTC-31JUL26-89000-C",
+      "mark_price": 0.01440603,
+      "open_interest": 121.7
+    },
+    {
+      "best_ask": 0.008,
+      "best_bid": 0.0075,
+      "deribit_delta": null,
+      "deribit_mark_iv": 52.37,
+      "instrument_name": "BTC-25SEP26-50000-P",
+      "mark_price": 0.0075372,
+      "open_interest": 3166.2
+    },
+    {
+      "best_ask": 0.016,
+      "best_bid": 0.0155,
+      "deribit_delta": null,
+      "deribit_mark_iv": 46.47,
+      "instrument_name": "BTC-25SEP26-58000-P",
+      "mark_price": 0.01562075,
+      "open_interest": 599.7
+    },
+    {
+      "best_ask": 0.0275,
+      "best_bid": 0.0265,
+      "deribit_delta": null,
+      "deribit_mark_iv": 43.09,
+      "instrument_name": "BTC-25SEP26-64000-P",
+      "mark_price": 0.02706318,
+      "open_interest": 181.3
+    },
+    {
+      "best_ask": 0.039,
+      "best_bid": 0.038,
+      "deribit_delta": null,
+      "deribit_mark_iv": 41.29,
+      "instrument_name": "BTC-25SEP26-68000-P",
+      "mark_price": 0.03867626,
+      "open_interest": 563.9
+    },
+    {
+      "best_ask": 0.0645,
+      "best_bid": 0.0635,
+      "deribit_delta": null,
+      "deribit_mark_iv": 39.24,
+      "instrument_name": "BTC-25SEP26-74000-P",
+      "mark_price": 0.06412477,
+      "open_interest": 95.6
+    },
+    {
+      "best_ask": 0.0875,
+      "best_bid": 0.0865,
+      "deribit_delta": null,
+      "deribit_mark_iv": 38.11,
+      "instrument_name": "BTC-25SEP26-78000-P",
+      "mark_price": 0.08692346,
+      "open_interest": 640.7
+    },
+    {
+      "best_ask": 0.057,
+      "best_bid": 0.056,
+      "deribit_delta": null,
+      "deribit_mark_iv": 37.13,
+      "instrument_name": "BTC-25SEP26-84000-C",
+      "mark_price": 0.05641615,
+      "open_interest": 657.4
+    },
+    {
+      "best_ask": 0.041,
+      "best_bid": 0.04,
+      "deribit_delta": null,
+      "deribit_mark_iv": 36.61,
+      "instrument_name": "BTC-25SEP26-88000-C",
+      "mark_price": 0.04045598,
+      "open_interest": 324.3
+    },
+    {
+      "best_ask": 0.025,
+      "best_bid": 0.024,
+      "deribit_delta": null,
+      "deribit_mark_iv": 36.51,
+      "instrument_name": "BTC-25SEP26-94000-C",
+      "mark_price": 0.02443589,
+      "open_interest": 140.5
+    },
+    {
+      "best_ask": 0.0175,
+      "best_bid": 0.017,
+      "deribit_delta": null,
+      "deribit_mark_iv": 36.65,
+      "instrument_name": "BTC-25SEP26-98000-C",
+      "mark_price": 0.01742403,
+      "open_interest": 158.8
+    },
+    {
+      "best_ask": 0.01,
+      "best_bid": 0.0095,
+      "deribit_delta": null,
+      "deribit_mark_iv": 59.88,
+      "instrument_name": "BTC-25DEC26-40000-P",
+      "mark_price": 0.00976137,
+      "open_interest": 3175.9
+    },
+    {
+      "best_ask": 0.031,
+      "best_bid": 0.0295,
+      "deribit_delta": null,
+      "deribit_mark_iv": 48.83,
+      "instrument_name": "BTC-25DEC26-56000-P",
+      "mark_price": 0.03028443,
+      "open_interest": 72.3
+    },
+    {
+      "best_ask": 0.053,
+      "best_bid": 0.0515,
+      "deribit_delta": null,
+      "deribit_mark_iv": 45.48,
+      "instrument_name": "BTC-25DEC26-64000-P",
+      "mark_price": 0.05231404,
+      "open_interest": 96.0
+    },
+    {
+      "best_ask": 0.078,
+      "best_bid": 0.076,
+      "deribit_delta": null,
+      "deribit_mark_iv": 43.77,
+      "instrument_name": "BTC-25DEC26-70000-P",
+      "mark_price": 0.07693756,
+      "open_interest": 1132.6
+    },
+    {
+      "best_ask": 0.11,
+      "best_bid": 0.108,
+      "deribit_delta": null,
+      "deribit_mark_iv": 42.48,
+      "instrument_name": "BTC-25DEC26-76000-P",
+      "mark_price": 0.10921135,
+      "open_interest": 143.8
+    },
+    {
+      "best_ask": 0.1005,
+      "best_bid": 0.0985,
+      "deribit_delta": null,
+      "deribit_mark_iv": 41.23,
+      "instrument_name": "BTC-25DEC26-84000-C",
+      "mark_price": 0.0995456,
+      "open_interest": 598.6
+    },
+    {
+      "best_ask": 0.082,
+      "best_bid": 0.08,
+      "deribit_delta": null,
+      "deribit_mark_iv": 40.65,
+      "instrument_name": "BTC-25DEC26-88000-C",
+      "mark_price": 0.08092627,
+      "open_interest": 1716.3
+    },
+    {
+      "best_ask": 0.0565,
+      "best_bid": 0.055,
+      "deribit_delta": null,
+      "deribit_mark_iv": 40.03,
+      "instrument_name": "BTC-25DEC26-95000-C",
+      "mark_price": 0.05573452,
+      "open_interest": 1174.3
+    },
+    {
+      "best_ask": 0.039,
+      "best_bid": 0.038,
+      "deribit_delta": null,
+      "deribit_mark_iv": 39.88,
+      "instrument_name": "BTC-25DEC26-102000-C",
+      "mark_price": 0.03844933,
+      "open_interest": 58.7
+    },
+    {
+      "best_ask": 0.029,
+      "best_bid": 0.0275,
+      "deribit_delta": null,
+      "deribit_mark_iv": 40.01,
+      "instrument_name": "BTC-25DEC26-108000-C",
+      "mark_price": 0.02820068,
+      "open_interest": 76.0
+    }
+  ],
+  "snapshot_time": "2026-05-25T15:42:17+00:00"
+}
