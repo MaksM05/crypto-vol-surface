@@ -5,6 +5,7 @@ Usage
     uv run python scripts/fit_surface.py
         [--time ISO8601]    # default: most recent option_quotes.time
         [--output-dir PATH] # default: tests/analytics/
+        [--no-plot]         # default: render the 3D plot
 """
 
 from __future__ import annotations
@@ -16,6 +17,7 @@ from datetime import datetime
 from pathlib import Path
 
 from volsurface.analytics.surface_fit import fit_surface
+from volsurface.analytics.surface_plot import render_surface
 from volsurface.config import Settings
 from volsurface.storage import close_pool, get_pool
 
@@ -32,6 +34,11 @@ def _parse_args() -> argparse.Namespace:
         help="ISO 8601 snapshot timestamp; defaults to most recent",
     )
     p.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
+    p.add_argument(
+        "--no-plot",
+        action="store_true",
+        help="skip rendering the 3D HTML+PNG plot (fit + summary JSON only)",
+    )
     return p.parse_args()
 
 
@@ -74,6 +81,14 @@ async def main() -> None:
             for exp, why in sorted(report.skipped_expiries.items()):
                 print(f"    {exp.date()}: {why}")
         print(f"summary written to {args.output_dir}/")
+
+        if not args.no_plot:
+            if report.fit.success and report.fit.params is not None:
+                paths = render_surface(report, args.output_dir)
+                print(f"  HTML: {paths.html}")
+                print(f"  PNG:  {paths.png}")
+            else:
+                print(f"  skipping plot: {report.fit.message}")
     finally:
         await close_pool()
 

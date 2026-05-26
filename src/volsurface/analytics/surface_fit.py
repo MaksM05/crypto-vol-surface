@@ -43,6 +43,21 @@ log = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True, slots=True)
+class SurfaceMarketPoint:
+    """One liquid (k, T, σ_BS) market observation that entered the SSVI fit.
+
+    Carried in :class:`SurfaceFitReport` so the 3D viz can overlay the real
+    data points on top of the fitted mesh without re-querying the DB or
+    duplicating the filter / IV-solve pipeline.
+    """
+
+    expiry: datetime
+    t_years: float
+    k: float  # log-moneyness ln(K/F)
+    sigma_bs: float  # decimal vol from the IV solver (not %)
+
+
+@dataclass(frozen=True, slots=True)
 class SurfaceFitReport:
     """Result of fitting one full SSVI surface."""
 
@@ -54,6 +69,7 @@ class SurfaceFitReport:
     per_expiry_rmse: dict[datetime, float]
     forwards: dict[datetime, float]
     skipped_expiries: dict[datetime, str]  # expiry → why skipped
+    market_points: list[SurfaceMarketPoint]  # ordered by (expiry, k)
 
 
 async def fit_surface(
@@ -86,6 +102,7 @@ async def fit_surface(
 
     backbone_entries: list[tuple[datetime, float, float]] = []  # (expiry, T, θ_T)
     backbone_points: dict[datetime, list[tuple[float, float]]] = {}  # expiry → [(k, w)]
+    backbone_market: dict[datetime, list[tuple[float, float]]] = {}  # expiry → [(k, σ)]
     forwards: dict[datetime, float] = {}
     skipped: dict[datetime, str] = {}
 
@@ -102,6 +119,7 @@ async def fit_surface(
 
         expiry_quotes = [q for q in all_quotes if q.expiry == exp]
         points: list[tuple[float, float]] = []  # (k, w_market = σ²·T)
+        market_pts: list[tuple[float, float]] = []  # (k, σ_BS) for the plot overlay
         for q in expiry_quotes:
             if q.mark_price is None or q.mark_price <= 0:
                 continue
@@ -131,6 +149,7 @@ async def fit_surface(
             if abs(k) >= 3.0:
                 continue
             points.append((k, sigma * sigma * t))
+            market_pts.append((k, sigma))
 
         if len(points) < 6:
             skipped[exp] = f"only {len(points)} liquid OTM points (need >= 6)"
@@ -149,6 +168,7 @@ async def fit_surface(
             continue
         backbone_entries.append((exp, t, theta_t))
         backbone_points[exp] = points
+        backbone_market[exp] = market_pts
 
     # Sort by T ascending.
     backbone_entries.sort(key=lambda x: x[1])
@@ -164,6 +184,7 @@ async def fit_surface(
             per_expiry_rmse={},
             forwards=forwards,
             skipped_expiries=skipped,
+            market_points=[],
         )
 
     backbone = SSVIBackbone(
@@ -199,6 +220,13 @@ async def fit_surface(
             w_pred = ssvi_total_variance(ks, backbone.theta[i], fit.params)
             per_expiry_rmse[exp] = float(np.sqrt(np.mean((w_pred - ws) ** 2)))
 
+    # Assemble market_points in the same (expiry, k) order so the plotter's
+    # overlay matches what entered the fit exactly.
+    market_points: list[SurfaceMarketPoint] = []
+    for exp, t_yrs, _ in backbone_entries:
+        for k, sigma in backbone_market[exp]:
+            market_points.append(SurfaceMarketPoint(expiry=exp, t_years=t_yrs, k=k, sigma_bs=sigma))
+
     report = SurfaceFitReport(
         snapshot_time=snapshot_time,
         n_expiries_total=len(distinct_expiries),
@@ -208,6 +236,7 @@ async def fit_surface(
         per_expiry_rmse=per_expiry_rmse,
         forwards=forwards,
         skipped_expiries=skipped,
+        market_points=market_points,
     )
 
     if output_dir is not None:
