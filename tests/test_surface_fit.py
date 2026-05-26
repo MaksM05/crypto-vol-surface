@@ -82,15 +82,19 @@ async def _load_fixture_into_db(pool: asyncpg.Pool) -> datetime:
 async def test_fit_real_snapshot_both_arb_free(
     pool: asyncpg.Pool, db_cleanup: None, tmp_path: Path
 ) -> None:
-    """The headline gate: 4-expiry BTC surface fits + butterfly + calendar pass."""
+    """The headline gate: dense BTC surface fits + butterfly + calendar pass."""
     snapshot_time = await _load_fixture_into_db(pool)
     async with pool.acquire() as conn:
         report = await fit_surface(conn, snapshot_time, output_dir=tmp_path)
 
-    assert report.n_expiries_total == 4, "fixture has 4 captured expiries"
-    assert report.n_expiries_fitted >= 3, (
-        f"need >= 3 expiries in joint fit; got {report.n_expiries_fitted} "
-        f"(skipped: {report.skipped_expiries})"
+    # Dense full-chain fixture: many expiries seen, ~5 survive the liquidity
+    # filter (sub-week expiries fail on wing-spread/mid >= 5%).
+    assert report.n_expiries_total >= 5, (
+        f"dense fixture should have >= 5 distinct expiries; got {report.n_expiries_total}"
+    )
+    assert report.n_expiries_fitted >= 5, (
+        f"need >= 5 expiries in joint fit on the dense fixture; got "
+        f"{report.n_expiries_fitted} (skipped: {report.skipped_expiries})"
     )
     assert report.fit.success, f"fit did not converge: {report.fit.message}"
     assert report.fit.params is not None

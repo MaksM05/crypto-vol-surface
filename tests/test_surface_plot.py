@@ -197,38 +197,46 @@ async def test_plot_handles_fit_with_dropped_expiries(
     cleanly from the remaining expiries — no crash, mesh covers the
     successfully-fitted range only."""
     payload = json.loads(FIXTURE.read_text())
-    # Drop the forward for the second expiry to simulate an ingestion gap.
-    target_expiry_iso = payload["expiries"][1]
+    # Drop the longest-dated expiry's forward — guaranteed to have been in
+    # the fitted set on the dense fixture, so dropping it provably reduces
+    # the fitted count rather than landing on an already-skipped sub-week one.
+    target_expiry_iso = payload["expiries"][-1]
+
+    # Baseline: full fit (compare against this after the drop).
+    full_snapshot_time = await _load_fixture_into_db(pool)
+    async with pool.acquire() as conn:
+        baseline = await fit_surface(conn, full_snapshot_time)
+        await conn.execute(
+            "TRUNCATE option_quotes, forwards, funding_rates, instruments RESTART IDENTITY CASCADE"
+        )
 
     snapshot_time = await _load_fixture_into_db(pool, drop_forward_for_expiry=target_expiry_iso)
     async with pool.acquire() as conn:
         report = await fit_surface(conn, snapshot_time)
 
-    # Fit succeeded on the remaining 3 expiries; the missing one is recorded.
-    assert report.n_expiries_total == 4
-    assert report.n_expiries_fitted == 3
+    # The drop landed: the target is skipped for the reason we engineered,
+    # and fitted-expiry count drops by exactly one.
     target_expiry = datetime.fromisoformat(target_expiry_iso)
     assert target_expiry in report.skipped_expiries
     assert "no forward" in report.skipped_expiries[target_expiry]
+    assert report.n_expiries_fitted == baseline.n_expiries_fitted - 1
 
     # And the plot renders without raising.
     paths = render_surface(report, tmp_path)
     assert paths.html.exists() and paths.png.exists()
 
-    # Mesh covers only the fitted T range — the dropped expiry's T must be
-    # outside the surface's y-grid.
+    # Mesh covers only the fitted T range — the dropped expiry must not be
+    # in the fitted backbone.
     fig = build_figure(report)
     surface = next(t for t in fig.data if isinstance(t, go.Surface))
     fitted_t_max = float(max(surface.y))
-    # The dropped expiry was the second-shortest tenor — confirm no mesh
-    # was drawn at the dropped tenor by checking its T against the fitted set.
     fitted_expiries = {e.date() for e in report.fit.backbone.expiries}
     assert target_expiry.date() not in fitted_expiries
-    # Sanity: the scatter has fewer points than the full fixture would.
+    # Scatter point count exactly matches the report's count; both have
+    # strictly fewer points than the baseline since we dropped an expiry.
     scatter = next(t for t in fig.data if isinstance(t, go.Scatter3d))
-    assert len(scatter.x) == report.n_points_total < 40, (
-        "fewer than the full 40 points should remain after dropping one expiry"
-    )
+    assert len(scatter.x) == report.n_points_total
+    assert report.n_points_total < baseline.n_points_total
     assert fitted_t_max > 0.0  # plot is non-degenerate
 
 
