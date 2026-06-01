@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environment
+.env
+.env.local
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# Generated outputs (regeneratable from code + fixtures)
+tests/analytics/*.html
+tests/analytics/*.png
+tests/validation/*.png
+tests/validation/*.json
+
+# Throwaway scripts
+run_once.py
+
+# Local databases
+*.db
+*.sqlite
